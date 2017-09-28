@@ -1,12 +1,12 @@
 <!doctype html>
  <html>
   <head>
-    <title>Dancr</title>
+    <title>Dancr 2</title>
     <link rel=stylesheet type=text/css href="[% css_url %]">
   </head>
   <body>
     <div class=page>
-    <h1>Dancr</h1>
+    <h1>Dancr 2</h1>
        <div class=metanav>
        [% IF not session.logged_in %]
          <a href="[% login_url %]">log in</a>

@@ -14,14 +14,7 @@ use File::Spec;
 use File::Slurper qw/ read_text /;
 use Template;
 
-###
-my $dbFlag = "DB_CREATED_FILE.txt";
-
-my $database = testForFile($dbFlag);
-###
-
-#set 'database'     => File::Spec->catfile(File::Spec->tmpdir(), 'dancr.db');
-set 'database'     => File::Spec->catfile(File::Spec->tmpdir(), $database);
+set 'database'     => File::Spec->catfile(File::Spec->tmpdir(), 'dancr.db');
 set 'session'      => 'Simple';
 set 'template'     => 'template_toolkit';
 set 'logger'       => 'console';
@@ -33,12 +26,12 @@ set 'username'     => 'admin';
 set 'password'     => 'password';
 set 'layout'       => 'main';
 
-#my $is_file = "/tmp/dancr.db";
-#if(! $is_file ){ # Check for DB file.
-#       print "DB does not exist.\n Creating!\n";
-#       } else {
-#       print "DB $is_file exists!\n";
-#};
+my $is_file = "/tmp/dancr.db";
+if(! $is_file ){ # Check for DB file.
+       print "DB does not exist.\n Creating!\n";
+       } else {
+       print "DB $is_file exists!\n";
+};
 
 my $flash;
 
@@ -133,43 +126,3 @@ start;
 ###
 
 true;
-
-### SUBS
-
-sub testForFile {
- my($filename) = @_;
- my $uniqueDbName;
-  print "Filename: $filename.\n";
-  if (-f $filename) {
-    print "File Exists!\n";
-    open (my $fh, "$filename");
-    my $line = <$fh>;
-    $uniqueDbName = $line;
-    print "DB name: $uniqueDbName.\n";
-  } else {
-    print "File does not exist. Making $filename\n";
-    $uniqueDbName = createUniqueDbName();
-    openFile($filename,$uniqueDbName);
-  }
-  return($uniqueDbName);
-}
-
-sub openFile {
-  my($filename,$uniqueDbName) = @_;
-  open( my $fh, ">","$filename") || die "Flaming death on creation of DB Flag file:$!\n";
-  print "File open!\n";
-  print $fh "$uniqueDbName\n";
-  close $fh;
-}
-
-sub createUniqueDbName {
-  my $time = time(); 
-  my $rand = int(rand(10)); 
-  my $name = "dancr_".$time.$rand.".db"; 
-  print $name, "\n\n"; 
-  return($name);
-};
-
-
-
-###
